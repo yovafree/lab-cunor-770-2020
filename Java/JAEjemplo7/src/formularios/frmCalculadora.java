@@ -18,6 +18,11 @@ public class frmCalculadora extends javax.swing.JFrame {
      */
     public frmCalculadora() {
         initComponents();
+        mensaje();
+    }
+    
+    public void mensaje(){
+        System.out.println("Programa iniciado");
     }
 
     /**
