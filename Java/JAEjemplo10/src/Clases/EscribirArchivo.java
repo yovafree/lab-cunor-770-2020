@@ -5,6 +5,7 @@
  */
 package Clases;
 
+import java.io.File;
 import java.io.FileWriter;
 import java.io.PrintWriter;
 
@@ -19,13 +20,13 @@ public class EscribirArchivo {
         PrintWriter pw = null;
         try
         {
-            fichero = new FileWriter("C:/ficheros/archivo.txt");
+            fichero = new FileWriter(DirectorioActual()+"/archivo.txt");
             pw = new PrintWriter(fichero);
 
             for (int i = 0; i < 10; i++)
-                pw.println("Linea " + i); //Reemplaza
+                pw.append("Linea " + i); //Reemplaza
             
-            pw.append(""); // Agrega
+            //pw.append(""); // Agrega
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -39,5 +40,12 @@ public class EscribirArchivo {
               e2.printStackTrace();
            }
         }
+    }
+    
+    public static String DirectorioActual(){
+        String directorio = System.getProperty("java.class.path");
+        File dir = new File(directorio);
+        String directorioPadre = dir.getParent();
+        return directorioPadre;
     }
 }

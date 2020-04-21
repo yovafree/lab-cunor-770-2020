@@ -5,23 +5,27 @@
  */
 package Clases;
 
+import Modelo.Jugador;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.util.ArrayList;
 
 /**
  *
  * @author erwin
  */
-public class LeerArchivo {
-    public static void main(String [] arg) {
-      File archivo = null;
-      FileReader fr = null;
-      BufferedReader br = null;
-      
-      System.out.println(DirectorioActual());
-      
-      try {
+public class LeerEstructura {
+    static ArrayList<Jugador> lstJugadores;
+    
+    public static void main(String[] args){
+        lstJugadores = new ArrayList<>();
+        
+        File archivo = null;
+        FileReader fr = null;
+        BufferedReader br = null;
+        
+        try {
          // Apertura del fichero y creacion de BufferedReader para poder
          // hacer una lectura comoda (disponer del metodo readLine()).
          archivo = new File(DirectorioActual()+"/archivo.txt");
@@ -30,8 +34,28 @@ public class LeerArchivo {
 
          // Lectura del fichero
          String linea;
-         while((linea=br.readLine())!=null)
-            System.out.println(linea);
+         while((linea=br.readLine())!=null){
+             String[] ln = linea.split(",");
+             
+             Jugador nuevo = new Jugador();
+             nuevo.setCodigo(Integer.parseInt(ln[0]));
+             nuevo.setNombre(ln[1]);
+             nuevo.setPunteo(Integer.parseInt(ln[2]));
+             
+             lstJugadores.add(nuevo);
+         }
+         
+         
+         lstJugadores.forEach((item) -> {
+             System.out.println(item.getCodigo() + " " + item.getNombre() + " " + item.getPunteo());
+            });
+         
+         Jugador nuevo1 = new Jugador();
+         nuevo1.setCodigo(5);
+         nuevo1.setNombre("Nuevo jugador");
+         nuevo1.setPunteo(8000);
+         
+         lstJugadores.add(nuevo1);
       }
       catch(Exception e){
          e.printStackTrace();
@@ -48,6 +72,8 @@ public class LeerArchivo {
          }
       }
    }
+    
+    
     
     public static String DirectorioActual(){
         String directorio = System.getProperty("java.class.path");
