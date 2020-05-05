@@ -5,67 +5,49 @@
  */
 package Clases;
 
-import Modelo.Jugador;
+import static Clases.LeerArchivo.DirectorioActual;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
-import java.util.ArrayList;
 
 /**
  *
  * @author erwin
  */
-public class LeerEstructura {
-    static ArrayList<Jugador> lstJugadores;
+public class LeerArchivo2 {
+    static File archivo = null;
+    static FileReader fr = null;
+    static BufferedReader br = null;
+    static String[][] mat;
     
     public static void main(String[] args){
-        lstJugadores = new ArrayList<>();
-        
-        File archivo = null;
-        FileReader fr = null;
-        BufferedReader br = null;
-        
-        try {
+      System.out.println(DirectorioActual());
+      mat = new String[8][8];
+      
+      try {
          // Apertura del fichero y creacion de BufferedReader para poder
          // hacer una lectura comoda (disponer del metodo readLine()).
-         archivo = new File(DirectorioActual()+"/archivo.txt");
+         archivo = new File(DirectorioActual()+"/archivo2.txt");
          fr = new FileReader (archivo);
          br = new BufferedReader(fr);
 
          // Lectura del fichero
          String linea;
+         int y = 0;
          while((linea=br.readLine())!=null){
              String[] ln = linea.split(",");
-             
-             Jugador nuevo = new Jugador();
-             nuevo.setCodigo(Integer.parseInt(ln[0]));
-             nuevo.setNombre(ln[1]);
-             nuevo.setPunteo(Integer.parseInt(ln[2]));
-             
-             lstJugadores.add(nuevo);
+             for(int x= 0;x<8;x++){
+                 mat[x][y] = ln[x];
+             }
+             y++;
          }
          
-         
-         lstJugadores.forEach((item) -> {
-             System.out.println(item.getCodigo() + " " + item.getNombre() + " " + item.getPunteo());
-            });
-         
-         Jugador nuevo1 = new Jugador();
-         nuevo1.setCodigo(5);
-         nuevo1.setNombre("Nuevo jugador");
-         nuevo1.setPunteo(8000);
-         
-         lstJugadores.add(nuevo1);
-         
-         System.out.println("\n");
-         
-         lstJugadores.forEach((item) -> {
-            System.out.println(item.getCodigo() + " " + item.getNombre() + " " + item.getPunteo());
-           });
-         
-        for(Jugador item : lstJugadores){
-            item.getCodigo();
-        }
+         for(int j=0;j<8;j++){
+             for(int k=0;k<8;k++){
+                 System.out.print(mat[j][k] + " ");
+             }
+             System.out.print("\n");
+         }
       }
       catch(Exception e){
          e.printStackTrace();
@@ -81,9 +63,7 @@ public class LeerEstructura {
             e2.printStackTrace();
          }
       }
-   }
-    
-    
+    }
     
     public static String DirectorioActual(){
         String directorio = System.getProperty("java.class.path");
